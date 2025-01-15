@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB Homepage</title>
+    <link rel="stylesheet" type="text/css" href="/styles/register.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    <div class="nav">
+        <div class="inner mg">
+            <div class="logo">
+                <h1 class="logo">Facebook</h1>
+            </div>
+        </div>
+    </div>
+    <div class="main mg">
+        <div class="left">
+            <h3>Facebook helps you connect and share with the people in your life.</h3>
+            <img id="cimg" src="https://i.imgur.com/p4acFUi.png">
+        </div>
+        <div class="right">
+            <form action="/user/register" method="post">
+                <h1>Create Account</h1>
+
+                <input type="text" id="message" value="{{message}}" name="message" hidden>
+
+                <input type="text" name="firstname" id="firstname" placeholder="First name">
+                <input type="text" name="lastname" id="lastname" placeholder="Last name">
+                <input type="text" name="email" id="email" placeholder="Email id">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password">
+
+                <div class="birth_area">
+                    <table class="birth">
+                        <tr>
+                            <td><strong>Birthday</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="wdth">
+                                <select class="pd_birth" id="month" name="monthofbirth">
+
+                                    <option value="Jan">Jan</option>
+                                    <option value="Feb">Feb</option>
+                                    <option value="Mar">Mar</option>
+                                    <option value="Apr">Apr</option>
+                                    <option value="May">May</option>
+                                    <option value="Jun">Jun</option>
+                                    <option value="Jul">Jul</option>
+                                    <option value="Aug">Aug</option>
+                                    <option value="Sep">Sep</option>
+                                    <option value="Oct">Oct</option>
+                                    <option value="Nov">Nov</option>
+                                    <option value="Dec">Dec</option>
+                                </select>
+                                <select class="pd_birth" id="day" name="dayofbirth">
+
+                                    <!-- Days 1-31 -->
+                                    <script>
+                                        for (let i = 1; i <= 31; i++) {
+                                            document.write(`<option value="${i}">${i}</option>`);
+                                        }
+                                    </script>
+                                </select>
+                                <select class="pd_birth" id="year" name="yearofbirth">
+
+                                    <!-- Years 2000-2024 -->
+                                    <script>
+                                        for (let i = 2024; i >= 1970; i--) {
+                                            document.write(`<option value="${i}">${i}</option>`);
+                                        }
+                                    </script>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+
+                <label><input type="radio" name="gender" value="female"> Female</label>
+                <label><input type="radio" name="gender" value="male"> Male</label>
+
+                <br>
+                <br>
+
+                <p class="fs_14">By clicking Sign Up, you agree to our <a href="#">Terms</a>, <a href="#">Data
+                        Policy</a> and <a href="#">Cookies Policy</a>. You may receive SMS Notifications from us and can
+                    opt out anytime.</p>
+
+                <button class="signupbutton" type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        const message = document.getElementById("message").value
+        if (message) {
+            swal(message)
+            document.getElementById("message").value = "";
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector('form').addEventListener("submit", formValidate);
+        });
+
+       function formValidate(e) {
+    e.preventDefault();
+
+    let firstname = document.getElementById("firstname").value;
+    let lastname = document.getElementById("lastname").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirmpassword = document.getElementById("confirmpassword").value;
+    let gender = document.querySelector('input[name="gender"]:checked');
+    let month = document.getElementById("month").value;
+    let day = document.getElementById("day").value;
+    let year = document.getElementById("year").value;
+
+    // Validate the required fields
+    if (firstname == "" || lastname == "" || email == "" || password == "" || confirmpassword == "") {
+        swal("All fields are required!");
+        return false;
+    } 
+    if (password !== confirmpassword) {
+        swal("Passwords do not match!");
+        return false;
+    } 
+    if (!gender) {
+        swal("Please select a gender!");
+        return false;
+    } 
+    if (month == "" || day == "" || year == "") {
+        swal("Please select a valid birthday!");
+        return false;
+    }
+
+    // Email format validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        swal("Please enter a valid email address");
+        return false;
+    }
+
+    // If all checks pass, submit the form
+    e.target.submit();
+}
+
+
+    </script>
+</body>
+
+</html>
